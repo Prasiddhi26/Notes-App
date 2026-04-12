@@ -102,3 +102,31 @@ export const updateNote = async (req, res) =>{
     })
   }
 };
+
+//DELETE note api
+export const deleteNote = async (req,res) =>{
+  try{
+    const { id } = req.params;
+    
+    const deletedNote = await Note.findByIdAndDelete(id)
+     
+    if (!deletedNote) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Note deleted successfully",
+      data: deletedNote,
+    });
+  }
+  catch(error){
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+};
