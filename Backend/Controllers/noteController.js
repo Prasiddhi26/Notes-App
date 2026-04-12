@@ -67,3 +67,38 @@ export const getNoteById = async (req, res) => {
     });
   }
 };
+
+
+// UPDATE note api
+export const updateNote = async (req, res) =>{
+  try{
+    const { id } = req.params;
+    const { noteTitle, noteContent } = req.body;
+
+    const updatedNote = await Note.findOneAndUpdate(
+       { _id: id },
+      { noteTitle, noteContent },
+      { new: true } // returns updated document
+    );
+
+    if (!updatedNote) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+      });
+    }
+
+    res.status(201).json({
+      success: true,
+      message: "Note updated successfully",
+      data: updatedNote,
+    });
+
+  }
+   catch(error){
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    })
+  }
+};
