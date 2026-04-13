@@ -10,7 +10,7 @@ function Home({ notes, setNotes , search}) {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/notes");
+        const res = await axios.get("https://notes-app-backend-j7if.onrender.com/api/notes");
 
         //  backend should return {data: array}
         setNotes(res.data.data);
