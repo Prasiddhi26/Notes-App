@@ -21,7 +21,7 @@ function EditNote({ notes, setNotes }) {
 
     try {
       // 🔥 1. Update backend
-      await axios.put(`http://localhost:5000/api/notes/${id}`, {
+      await axios.put(`https://notes-app-backend-j7if.onrender.com/api/notes/${id}`, {
         noteTitle,
         noteContent,
       });
