@@ -21,7 +21,15 @@ export const getNotes = async (req, res) => {
 // POST note
 export const createNote = async (req, res) => {
   try{
-    const {noteTitle,noteContent} = req.body;
+    const noteTitle = req.body.noteTitle || "";
+    const noteContent = req.body.noteContent || "";
+
+    if (!noteTitle && !noteContent) {
+      return res.status(400).json({
+        success: false,
+        message: "Title or content required",
+      });
+    }
     const newNote = await Note.create({
       noteTitle,
       noteContent,

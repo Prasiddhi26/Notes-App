@@ -77,7 +77,7 @@ function Home({ notes, setNotes , search}) {
 
                   <button
                     className="btn btn-danger btn-sm"
-                    onClick={() => handleDelete(note._id)}
+                    onClick={() => note?._id && deleteNote(note._id)}
                   >
                     Delete
                   </button>
