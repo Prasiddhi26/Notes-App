@@ -42,8 +42,8 @@ function Home({ notes, setNotes , search}) {
 
   // 🔍 SEARCH FILTER (IMPORTANT PART)
   const filteredNotes = notes.filter((note) =>
-    note.noteTitle.toLowerCase().includes(search.toLowerCase()) ||
-    note.noteContent.toLowerCase().includes(search.toLowerCase())
+    note.noteTitle?.toLowerCase().includes(search.toLowerCase()) ||
+    note.noteContent?.toLowerCase().includes(search.toLowerCase())
   );
   return (
     <div className="container mt-4">
