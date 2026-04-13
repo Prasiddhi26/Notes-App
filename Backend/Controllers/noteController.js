@@ -21,7 +21,7 @@ export const getNotes = async (req, res) => {
 // POST note
 export const createNote = async (req, res) => {
   try{
-    const {noteTitle,noteContent} = new Note(req.body);
+    const {noteTitle,noteContent} = req.body;
     const newNote = await Note.create({
       noteTitle,
       noteContent,
@@ -34,6 +34,7 @@ export const createNote = async (req, res) => {
     });
   }
   catch(error){
+    console.log(error);
     res.status(500).json({
       success: false,
       message: error.message,
