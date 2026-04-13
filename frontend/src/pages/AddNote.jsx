@@ -1,26 +1,34 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function AddNote() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!title || !content) {
       alert("Please fill all fields");
       return;
     }
-    console.log("Title:", title);
-    console.log("Content:", content);
 
-    //clear form after submit
-    setTitle("");
-    setContent("");
-  };
-  const navigate = useNavigate();
-  const handleAddNote = () => {
-    navigate("/");
+    try {
+      await axios.post("http://localhost:5000/api/notes", {
+        title,
+        content,
+      });
+
+      setTitle("");
+      setContent("");
+
+      navigate("/"); // go to home after saving
+    } catch (error) {
+      console.log(error);
+      alert("Error saving note");
+    }
   };
 
   return (
@@ -49,14 +57,10 @@ function AddNote() {
               rows="4"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-            ></textarea>
+            />
           </div>
 
-          <button
-            onClick={handleAddNote}
-            type="submit"
-            className="btn btn-success w-100"
-          >
+          <button type="submit" className="btn btn-success w-100">
             Add Note
           </button>
         </form>
