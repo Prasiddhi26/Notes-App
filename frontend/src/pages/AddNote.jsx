@@ -3,24 +3,24 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function AddNote() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [noteTitle, setTitle] = useState("");
+  const [noteContent, setContent] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !content) {
+    if (!noteTitle || !noteContent) {
       alert("Please fill all fields");
       return;
     }
 
     try {
       await axios.post("http://localhost:5000/api/notes", {
-        title,
-        content,
+        noteTitle,
+        noteContent,
       });
-
+      console.log(noteTitle, noteContent);
       setTitle("");
       setContent("");
 
@@ -45,7 +45,7 @@ function AddNote() {
               type="text"
               className="form-control"
               placeholder="Enter title"
-              value={title}
+              value={noteTitle}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -55,7 +55,7 @@ function AddNote() {
               className="form-control"
               placeholder="Enter content"
               rows="4"
-              value={content}
+              value={noteContent}
               onChange={(e) => setContent(e.target.value)}
             />
           </div>

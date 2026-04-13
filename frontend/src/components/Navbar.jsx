@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ search, setSearch }) {
   const navigate = useNavigate();
   const handleAddNote = () => {
     navigate("/add");
@@ -11,10 +11,19 @@ function Navbar() {
       <h2 style={styles.logo}>Navbar</h2>
 
       {/* Search Bar */}
-      <input type="text" placeholder="Search notes..." style={styles.search} />
+      <input
+        type="text"
+        className="form-control w-25"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Search notes..."
+        style={styles.search}
+      />
 
       {/* Add Note Button */}
-      <button onClick={handleAddNote} style={styles.button}>Add Note</button>
+      <button onClick={handleAddNote} style={styles.button}>
+        Add Note
+      </button>
     </nav>
   );
 }

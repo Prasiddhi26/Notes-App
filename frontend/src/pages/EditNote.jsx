@@ -1,32 +1,44 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function EditNote({ notes, setNotes }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const existingNote = notes.find((n) => n.id === parseInt(id));
+  const existingNote = notes.find((n) => n._id === id);
 
-  const [title, setTitle] = useState(existingNote?.title || "");
-  const [content, setContent] = useState(existingNote?.content || "");
+  const [noteTitle, setTitle] = useState(existingNote?.noteTitle || "");
+  const [noteContent, setContent] = useState(existingNote?.noteContent || "");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !content) {
+    if (!noteTitle || !noteContent) {
       alert("Please fill all fields");
       return;
     }
 
-    const updatedNotes = notes.map((note) =>
-      note.id === parseInt(id)
-        ? { ...note, title, content }
-        : note
-    );
+    try {
+      // 🔥 1. Update backend
+      await axios.put(`http://localhost:5000/api/notes/${id}`, {
+        noteTitle,
+        noteContent,
+      });
 
-    setNotes(updatedNotes);
+      // 🔥 2. Update frontend state
+      const updatedNotes = notes.map((note) =>
+        note._id === id
+          ? { ...note, noteTitle, noteContent }
+          : note
+      );
 
-    navigate("/");
+      setNotes(updatedNotes);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (!existingNote) {
@@ -44,7 +56,7 @@ function EditNote({ notes, setNotes }) {
             <input
               type="text"
               className="form-control"
-              value={title}
+              value={noteTitle}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -53,7 +65,7 @@ function EditNote({ notes, setNotes }) {
             <textarea
               className="form-control"
               rows="4"
-              value={content}
+              value={noteContent}
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
