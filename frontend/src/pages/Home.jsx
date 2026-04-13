@@ -1,13 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Home({notes, setNotes}) {
   const navigate = useNavigate();
-
-  const [notes, setNotes] = useState([
-    { id: 1, title: "First Note", content: "This is my first note" },
-    { id: 2, title: "Second Note", content: "This is my second note" },
-  ]);
+ 
 
   const handleDelete = (id) => {
     const updatedNotes = notes.filter((note) => note.id !== id);

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
@@ -8,15 +9,20 @@ import AddNote from "./pages/AddNote";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
+  const [notes, setNotes] = useState([
+    { id: 1, title: "First Note", content: "This is my first note" },
+    { id: 2, title: "Second Note", content: "This is my second note" },
+  ]);
+
   return (
     <>
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/add" element={<AddNote />} />
-        <Route path="/note/:id" element={<NoteView />} />
-        <Route path="/edit/:id" element={<EditNote />} />
+        <Route path="/" element={<Home notes={notes} setNotes={setNotes} />} />
+        <Route path="/add" element={<AddNote notes={notes} setNotes={setNotes} />} />
+        <Route path="/note/:id" element={<NoteView notes={notes} />} />
+        <Route path="/edit/:id" element={<EditNote notes={notes} setNotes={setNotes} />} />
       </Routes>
     </>
   );
