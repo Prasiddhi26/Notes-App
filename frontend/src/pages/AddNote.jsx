@@ -16,7 +16,7 @@ function AddNote() {
     }
 
     try {
-      await axios.post("https://notes-app-backend-j7if.onrender.com/api/notes", {
+      await axios.post("https://notes-app-q77d.onrender.com/api/notes", {
         noteTitle,
         noteContent,
       });

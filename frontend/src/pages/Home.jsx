@@ -25,7 +25,7 @@ function Home({ notes, setNotes , search}) {
   // ✅ 2. DELETE NOTE
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://notes-app-backend-j7if.onrender.com/api/notes/${id}`);
+      await axios.delete(`https://notes-app-q77d.onrender.com/api/notes/${id}`);
 
       // remove from UI after delete
       const updatedNotes = notes.filter((note) => note._id !== id);
